@@ -1,6 +1,7 @@
 html, body {
     height: 100%;
     margin: 0;
+    font-family: Arial, serif;
 }
 
 .main-wrapper {
@@ -16,6 +17,12 @@ html, body {
     background: #f0f0f0;
     box-shadow: 0 0 4px silver;
     z-index: 2;
+    display: flex;
+    justify-content: center;
+}
+
+.main-header span + span {
+    margin-left: 20px;
 }
 
 .main-container {
@@ -38,6 +45,7 @@ html, body {
     min-width: 200px;
     padding: 10px;
     box-shadow: 0 0 4px silver;
+    text-align: center;
 }
 
 .main-footer {
@@ -46,4 +54,21 @@ html, body {
     background: #f0f0f0;
     box-shadow: 0 0 4px silver;
     z-index: 2;
+}
+
+ul.footer-menu {
+    margin: 0;
+    list-style-type: none;
+    display: flex;
+    justify-content: center;
+}
+
+ul.footer-menu > li {
+    margin: 0 10px;
+    padding: 0;
+    cursor: pointer;
+}
+
+ul.footer-menu > li:hover {
+    text-decoration: underline;
 }

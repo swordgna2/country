@@ -1,8 +1,22 @@
+/**
+ * Страна.
+ *
+ * @class Country
+ * @constructor
+ */
 let Country = function () {
     this.live = false;
+    this.year = 1;
 };
 
+/**
+ * Методы класса Country.
+ */
 Country.prototype = {
+
+    /**
+     * Наименования.
+     */
     names: [
         "Австралия",
         "Австрия",
@@ -208,7 +222,15 @@ Country.prototype = {
         if (typeof this.code !== 'undefined') {
             return this.names[this.code];
         } else {
-            return 'без названия';
+            return 'Страна без названия';
         }
+    },
+
+    /**
+     * Уничтожить зависимости.
+     */
+    destroy: function () {
+        delete this.code;
     }
+
 };
