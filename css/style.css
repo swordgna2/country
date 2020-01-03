@@ -1,0 +1,49 @@
+html, body {
+    height: 100%;
+    margin: 0;
+}
+
+.main-wrapper {
+    display: flex;
+    position: relative;
+    flex-direction: column;
+    height: 100%;
+}
+
+.main-header {
+    position: relative;
+    padding: 10px;
+    background: #f0f0f0;
+    box-shadow: 0 0 4px silver;
+    z-index: 2;
+}
+
+.main-container {
+    position: relative;
+    flex: 1;
+    display: flex;
+}
+
+.dialog-container {
+    position: relative;
+    background: white;
+    padding: 10px;
+    flex: 1;
+}
+
+.statistics-container {
+    position: relative;
+    background: #f7f7f7;
+    flex: 15% 0;
+    min-width: 200px;
+    padding: 10px;
+    box-shadow: 0 0 4px silver;
+}
+
+.main-footer {
+    position: relative;
+    padding: 10px;
+    background: #f0f0f0;
+    box-shadow: 0 0 4px silver;
+    z-index: 2;
+}
