@@ -29,7 +29,7 @@ Footer.prototype = {
     /**
      * Обновить низ.
      */
-    refreshFooter: function () {
+    refreshFooter () {
         if (typeof this.$footerMenu === 'undefined') {
             this.$footerMenu = $('<ul/>');
             this.$footerMenu.appendTo(this.$footer);
@@ -45,7 +45,7 @@ Footer.prototype = {
      *
      * @param {Object} events
      */
-    listenFooterMenuForElementClicks: function (events) {
+    listenFooterMenuForElementClicks (events) {
         if (typeof events === 'object' && events !== null) {
             for (let element in events) {
                 if (events.hasOwnProperty(element) && typeof events[element] === 'function') {
@@ -59,7 +59,7 @@ Footer.prototype = {
     /**
      * Уничтожить привязки.
      */
-    destroy: function () {
+    destroy () {
         this.$footerMenu.remove();
         delete this.$footerMenu;
     }

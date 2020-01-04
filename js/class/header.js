@@ -29,7 +29,7 @@ Header.prototype = {
     /**
      * Обновить заголовок.
      */
-    refreshHeader: function () {
+    refreshHeader () {
         this.refreshCountryName();
         this.refreshYear();
     },
@@ -37,7 +37,7 @@ Header.prototype = {
     /**
      * Обновить название страны.
      */
-    refreshCountryName: function () {
+    refreshCountryName () {
         if (typeof this.$countryName === 'undefined') {
             this.$countryName = $('<span/>');
             this.$countryName.appendTo(this.$header);
@@ -51,7 +51,7 @@ Header.prototype = {
     /**
      * Обновить год.
      */
-    refreshYear: function () {
+    refreshYear () {
         if (typeof this.$year === 'undefined') {
             this.$year = $('<span/>');
             this.$year.appendTo(this.$header);
@@ -65,7 +65,7 @@ Header.prototype = {
     /**
      * Уничтожить привязки.
      */
-    destroy: function () {
+    destroy () {
         this.$countryName.remove();
         delete this.$countryName;
 

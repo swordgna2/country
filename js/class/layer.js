@@ -15,7 +15,7 @@ Layer.prototype = {
     /**
      * Создать вёрстку.
      */
-    createLayer: function () {
+    createLayer () {
         this.createWrapper();
         this.createHeader();
         this.createContainer();
@@ -25,7 +25,7 @@ Layer.prototype = {
     /**
      * Создать главный контейнер.
      */
-    createWrapper: function () {
+    createWrapper () {
         this.$wrapper = $('<div/>');
         this.$wrapper.appendTo($('body'));
         this.$wrapper.addClass('main-wrapper');
@@ -34,7 +34,7 @@ Layer.prototype = {
     /**
      * Создать заголовок.
      */
-    createHeader: function () {
+    createHeader () {
         this.$header = $('<div/>');
         this.$header.appendTo(this.$wrapper);
         this.$header.addClass('main-header');
@@ -43,7 +43,7 @@ Layer.prototype = {
     /**
      * Создать главный контейнер.
      */
-    createContainer: function () {
+    createContainer () {
         this.$container = $('<div/>');
         this.$container.appendTo(this.$wrapper);
         this.$container.addClass('main-container');
@@ -54,7 +54,7 @@ Layer.prototype = {
     /**
      * Создать контейнер диалога.
      */
-    createDialogContainer: function () {
+    createDialogContainer () {
         this.$dialog = $('<div/>');
         this.$dialog.appendTo(this.$container);
         this.$dialog.addClass('dialog-container');
@@ -63,7 +63,7 @@ Layer.prototype = {
     /**
      * Создать контейнер статистики.
      */
-    createStatisticsContainer: function () {
+    createStatisticsContainer () {
         this.$statistics = $('<div/>');
         this.$statistics.appendTo(this.$container);
         this.$statistics.addClass('statistics-container');
@@ -73,7 +73,7 @@ Layer.prototype = {
     /**
      * Создать низ.
      */
-    createFooter: function () {
+    createFooter () {
         this.$footer = $('<div/>');
         this.$footer.appendTo(this.$wrapper);
         this.$footer.addClass('main-footer');
@@ -82,7 +82,7 @@ Layer.prototype = {
     /**
      * Уничтожить зависимости.
      */
-    destroy: function () {
+    destroy () {
         delete this.$footer;
         delete this.$statistics;
         delete this.$dialog;

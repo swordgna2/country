@@ -218,7 +218,7 @@ Country.prototype = {
      *
      * @returns {string}
      */
-    getName: function () {
+    getName () {
         if (typeof this.code !== 'undefined') {
             return this.names[this.code];
         } else {
@@ -229,7 +229,7 @@ Country.prototype = {
     /**
      * Уничтожить зависимости.
      */
-    destroy: function () {
+    destroy () {
         delete this.code;
     }
 
