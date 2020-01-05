@@ -6,18 +6,15 @@
  * @constructor
  */
 let Header = function (parameters) {
-    if (typeof parameters !== 'object' || parameters === null) {
-        throw 'Неправильный формат параметров.';
-    }
+    functions.checkParametersIntegrity(parameters, {
+        $header: 'object',
+        country: 'object'
+    });
 
     this.$header = parameters.$header;
-    if (typeof this.$header !== 'object' || this.$header === null) {
-        throw 'Неправильный формат параметра $header';
-    }
-
     this.country = parameters.country;
-    if (typeof this.country !== 'object' || this.country === null || !(this.country instanceof Country)) {
-        throw 'Неправильный формат параметра country';
+    if (!(this.country instanceof Country)) {
+        throw 'Неправильный формат параметра country, ожидается объект класса Country.';
     }
 };
 
@@ -45,7 +42,7 @@ Header.prototype = {
         }
 
         let countryName = this.country.getName();
-        this.$countryName.text(countryName);
+        this.$countryName.html('<i class="fa fa-globe"></i>&nbsp;' + countryName);
     },
 
     /**
@@ -59,7 +56,7 @@ Header.prototype = {
         }
 
         let year = this.country.year;
-        this.$year.text('Год ' + year + '-й');
+        this.$year.html('<i class="fa fa-calendar"></i>&nbsp;Год ' + year + '-й');
     },
 
     /**

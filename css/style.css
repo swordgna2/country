@@ -99,10 +99,30 @@ ul.footer-menu > li:hover {
     top: 0;
     right: 0;
     padding: 0 3px;
-    color: gray;
     cursor: pointer;
 }
 
 .modal-dialog {
-    padding: 40px;
+    padding: 0;
+}
+
+.modal-dialog .modal-window-header {
+    padding: 20px 40px 20px;
+    text-align: center;
+    box-shadow: 0 3px 4px rgba(0, 0, 0, 0.15);
+}
+
+.modal-dialog .modal-window-content {
+    padding: 20px 40px;
+}
+
+.modal-dialog .modal-window-footer {
+    background: #eeeeee;
+    padding: 20px 40px 20px;
+    text-align: center;
+}
+
+.modal-alert {
+    border: 1px solid darkred;
+    color: darkred;
 }

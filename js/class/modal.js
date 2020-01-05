@@ -34,6 +34,7 @@ Modal.prototype = {
             this.closeIcon = parameters.closeIcon !== false;
             this.modal = Boolean(parameters.modal);
             this.onClose = typeof parameters.onClose === 'function' ? parameters.onClose : function () {};
+            this.appearanceEffect = parameters.appearanceEffect || '';
         }
     },
 
@@ -47,8 +48,9 @@ Modal.prototype = {
                 promise: function () {}
             });
             this.createLayers();
-            this.listenClose();
             this.$window.append(this.$html);
+            this.listenClose();
+            this.animateWindow();
         }
     },
 
@@ -118,6 +120,15 @@ Modal.prototype = {
     },
 
     /**
+     * Анимировать окно.
+     */
+    animateWindow: function () {
+        if (this.appearanceEffect === 'fadeIn') {
+            $(this.$window).hide().fadeIn('fast');
+        }
+    },
+
+    /**
      * Уничтожить привязки.
      */
     destroy () {
@@ -125,6 +136,7 @@ Modal.prototype = {
             instantly: true
         });
         delete this.$html;
+        delete this.appearanceEffect;
         delete this.onClose;
         delete this.modal;
         delete this.closeIcon;

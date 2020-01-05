@@ -219,18 +219,41 @@ Country.prototype = {
      * @returns {string}
      */
     getName () {
-        if (typeof this.code !== 'undefined') {
-            return this.names[this.code];
+        if (typeof this.countryCode !== 'undefined') {
+            return this.names[this.countryCode];
         } else {
             return 'Страна без названия';
         }
     },
 
     /**
+     * Установить код страны.
+     *
+     * @param {string|Number} countryCode
+     */
+    setCountryCode: function (countryCode) {
+        if (this.names[countryCode]) {
+            this.countryCode = countryCode;
+        } else {
+            throw 'Страны с кодом ' + countryCode + ' не существует.';
+        }
+    },
+
+    setCountryDefaults () {
+        console.log('setCountryDefaults');
+    },
+
+    createNeighbors () {
+        console.log('createNeighbors');
+    },
+
+    /**
      * Уничтожить зависимости.
      */
     destroy () {
-        delete this.code;
+        delete this.countryCode;
+        delete this.year;
+        delete this.live;
     }
 
 };
