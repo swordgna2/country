@@ -13,6 +13,15 @@ let functions = {
     },
 
     /**
+     * Получить случайное булево значение.
+     *
+     * @return {Boolean}
+     */
+    getBooleanRandom () {
+        return Math.random() > 0.5;
+    },
+
+    /**
      * Проверить совместимость параметров.
      *
      * @param {Object} parameters

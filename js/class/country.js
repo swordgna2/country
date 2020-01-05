@@ -239,8 +239,45 @@ Country.prototype = {
         }
     },
 
+    /**
+     * Установить умолчания для страны.
+     */
     setCountryDefaults () {
-        console.log('setCountryDefaults');
+        this.geo = {
+            plain: functions.getIntegerRandom(5000, 10000),
+            woods: functions.getIntegerRandom(5000, 10000),
+            mountains: functions.getIntegerRandom(5000, 10000),
+            sea: functions.getBooleanRandom()
+        };
+
+        this.people = {
+            peasants: functions.getIntegerRandom(100, 200),
+            workers: functions.getIntegerRandom(50, 100),
+            warriors: functions.getIntegerRandom(25, 50),
+            churchmen: functions.getIntegerRandom(10, 20)
+        };
+
+        this.stocks = {
+            money: functions.getIntegerRandom(1000, 2000),
+            gold: functions.getIntegerRandom(10, 20),
+            corn: this.geo.plain * functions.getIntegerRandom(5, 10),
+            wood: this.geo.woods * functions.getIntegerRandom(5, 10),
+            minerals: /*полезные ископаемые*/ this.geo.mountains * functions.getIntegerRandom(5, 10)
+        };
+
+        this.pendingEvents = {
+            seafaring: (this.geo.sea && Math.random() > 0.75) ? functions.getIntegerRandom(1, 3) : 0,
+            wedding: 0,
+            childBirth: 0
+        };
+
+        this.mood = {
+            peasants: 0.5,
+            workers: 0.5,
+            warriors: 0.5,
+            churchmen: 0.5
+        };
+        console.log('setCountryDefaults', this);
     },
 
     createNeighbors () {
@@ -251,6 +288,11 @@ Country.prototype = {
      * Уничтожить зависимости.
      */
     destroy () {
+        delete this.mood;
+        delete this.pendingEvents;
+        delete this.stocks;
+        delete this.people;
+        delete this.geo;
         delete this.countryCode;
         delete this.year;
         delete this.live;
