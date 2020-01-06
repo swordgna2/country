@@ -44,9 +44,12 @@ Layer.prototype = {
      * Создать главный контейнер.
      */
     createContainer () {
+        let $containerOuter = $('<div/>');
+        $containerOuter.appendTo(this.$wrapper);
+        $containerOuter.addClass('main-container');
         this.$container = $('<div/>');
-        this.$container.appendTo(this.$wrapper);
-        this.$container.addClass('main-container');
+        this.$container.appendTo($containerOuter);
+        this.$container.addClass('main-container-inner');
         this.createDialogContainer();
         this.createStatisticsContainer();
     },
@@ -67,7 +70,6 @@ Layer.prototype = {
         this.$statistics = $('<div/>');
         this.$statistics.appendTo(this.$container);
         this.$statistics.addClass('statistics-container');
-        this.$statistics.text('Статистика');
     },
 
     /**

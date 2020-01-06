@@ -30,20 +30,20 @@ button:hover {
 }
 
 .main-wrapper {
-    display: flex;
     position: relative;
+    display: flex;
     flex-direction: column;
     height: 100%;
 }
 
 .main-header {
     position: relative;
+    display: flex;
+    justify-content: center;
     padding: 10px;
     background: #f0f0f0;
     box-shadow: 0 0 4px silver;
     z-index: 2;
-    display: flex;
-    justify-content: center;
 }
 
 .main-header span {
@@ -56,6 +56,13 @@ button:hover {
 .main-container {
     position: relative;
     flex: 1;
+}
+.main-container-inner {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
     display: flex;
 }
 
@@ -64,17 +71,74 @@ button:hover {
     background: white;
     padding: 10px;
     flex: 1;
+    height: 100%;
+    overflow: auto;
 }
 
 .statistics-container {
     position: relative;
     background: #f7f7f7;
     flex: 15% 0;
-    min-width: 200px;
+    min-width: 300px;
+    height: 100%;
     padding: 10px;
+    box-sizing: border-box;
+    overflow: auto;
     box-shadow: 0 0 4px silver;
-    text-align: center;
+    text-align: left;
     user-select: none;
+}
+
+.group {
+    border: 1px solid silver;
+    border-radius: 7px;
+    background: white;
+    margin-bottom: 20px;
+    overflow: hidden;
+}
+
+.group-caption {
+    line-height: 18px;
+    padding: 6px 10px;
+    white-space: nowrap;
+    overflow: hidden;
+    cursor: pointer;
+    border-radius: 7px 7px 0 0;
+    background: #eeeeee;
+    transition: 0.28s;
+}
+.group-caption:hover {
+    background: #dddddd;
+}
+
+.group-data {
+    border-radius: 7px;
+    color: gray;
+}
+
+.list-row {
+    line-height: 20px;
+    padding-left: 10px;
+    display: flex;
+    height: 48px;
+    align-items: center;
+}
+
+.list-row + .list-row {
+    border-top: 1px solid #eeeeee;
+}
+
+.list-caption {
+    flex: 60% 0;
+}
+
+.list-value {
+    flex: 20% 0;
+}
+
+.list-dimension {
+    flex: 20% 0;
+    margin-left: 5px;
 }
 
 .main-footer {
@@ -155,4 +219,11 @@ ul.footer-menu > li:hover {
 .modal-alert {
     border: 1px solid darkred;
     color: darkred;
+}
+
+.bad-condition {
+    color: darkred;
+}
+.good-condition {
+    color: green;
 }

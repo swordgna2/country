@@ -18,7 +18,6 @@ let Main = function () {
     this.statistics = this.applyChildComponent(new Statistics(), {
         $statistics: this.layer.$statistics
     });
-    this.statistics.refreshStatistics();
 
     this.footer = this.applyChildComponent(new Footer(), {
         $footer: this.layer.$footer

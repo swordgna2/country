@@ -89,6 +89,29 @@ let functions = {
             windowClass: 'modal-alert',
             appearanceEffect: 'fadeIn'
         });
+    },
+
+    /**
+     * Преобразовать коэффициент (0...1) в формат процента.
+     *
+     * @param {Number} k
+     * @param {Number} precision
+     * @returns {string}
+     */
+    convertKToPercent: function (k, precision) {
+        k = isNaN(k) ? 0 : k;
+        precision = isNaN(precision) ? 0 : precision.toFixed(0);
+        return (k * 100).toFixed(precision);
+    },
+
+    colorPercentValue: function (value) {
+        if (value <= 33.333) {
+            return value + '&nbsp;<i class="fa fa-exclamation-triangle bad-condition"></i>';
+        } else if (value < 66.667) {
+            return value.toString();
+        } else {
+            return value + '&nbsp;<i class="fa fa-check-square-o good-condition"></i>';
+        }
     }
 
 };

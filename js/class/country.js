@@ -5,7 +5,6 @@
  * @constructor
  */
 let Country = function () {
-    this.live = false;
 };
 
 /**
@@ -253,7 +252,7 @@ Country.prototype = {
             peasants: functions.getIntegerRandom(100, 200),
             workers: functions.getIntegerRandom(50, 100),
             warriors: functions.getIntegerRandom(25, 50),
-            churchmen: functions.getIntegerRandom(10, 20)
+            priests: functions.getIntegerRandom(10, 20)
         };
 
         this.stocks = {
@@ -274,14 +273,12 @@ Country.prototype = {
             peasants: 0.5,
             workers: 0.5,
             warriors: 0.5,
-            churchmen: 0.5
+            priests: 0.5
         };
-
-        this.live = true;
-        console.log('setCountryDefaults', this);
     },
 
     createNeighbors () {
+        let neighborsCount = functions.getIntegerRandom(2, 5);
         console.log('createNeighbors');
     },
 
@@ -295,7 +292,6 @@ Country.prototype = {
         delete this.people;
         delete this.geo;
         delete this.countryCode;
-        delete this.live;
     }
 
 };

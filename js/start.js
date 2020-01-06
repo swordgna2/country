@@ -2,7 +2,7 @@ $(function () {
     // let game = new Main();
     // game.destroy();
     new Main();
-    // debug();
+    debug();
 });
 
 function debug () {
