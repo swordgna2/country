@@ -2,26 +2,28 @@
  * Заголовок.
  *
  * @class Header
- * @param {Object} parameters
  * @constructor
  */
-let Header = function (parameters) {
-    functions.checkParametersIntegrity(parameters, {
-        $header: 'object',
-        country: 'object'
-    });
-
-    this.$header = parameters.$header;
-    this.country = parameters.country;
-    if (!(this.country instanceof Country)) {
-        throw 'Неправильный формат параметра country, ожидается объект класса Country.';
-    }
+let Header = function () {
 };
 
 /**
  * Методы класса Header.
  */
 Header.prototype = {
+
+    /**
+     * Установить начальные параметры.
+     *
+     * @param {Object} parameters
+     */
+    setInitialParameters: function (parameters) {
+        functions.checkParametersIntegrity(parameters, {
+            $header: 'object'
+        });
+
+        this.$header = parameters.$header;
+    },
 
     /**
      * Обновить заголовок.
@@ -41,7 +43,7 @@ Header.prototype = {
             this.$countryName.addClass('country-name');
         }
 
-        let countryName = this.country.getName();
+        let countryName = this.parent.myCountry.getName();
         this.$countryName.html('<i class="fa fa-globe"></i>&nbsp;' + countryName);
     },
 
@@ -55,8 +57,12 @@ Header.prototype = {
             this.$year.addClass('year');
         }
 
-        let year = this.country.year;
-        this.$year.html('<i class="fa fa-calendar"></i>&nbsp;Год ' + year + '-й');
+        let year = this.parent.year;
+        let yearHtml = '';
+        if (year >= 1) {
+            yearHtml = '<i class="fa fa-calendar"></i>&nbsp;Год ' + year + '-й';
+        }
+        this.$year.html(yearHtml);
     },
 
     /**
@@ -68,6 +74,8 @@ Header.prototype = {
 
         this.$year.remove();
         delete this.$year;
+
+        delete this.$header;
     }
 
 };

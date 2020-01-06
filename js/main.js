@@ -5,29 +5,27 @@
  * @constructor
  */
 let Main = function () {
-    this.layer = new Layer();
+    this.myCountry = this.applyChildComponent(new Country(), {});
+
+    this.layer = this.applyChildComponent(new Layer(), {});
     this.layer.createLayer();
 
-    this.myCountry = new Country();
-
-    this.header = new Header({
-        $header: this.layer.$header,
-        country: this.myCountry
+    this.header = this.applyChildComponent(new Header(), {
+        $header: this.layer.$header
     });
     this.header.refreshHeader();
 
-    this.footer = new Footer({
-        $footer: this.layer.$footer,
-        country: this.myCountry
+    this.statistics = this.applyChildComponent(new Statistics(), {
+        $statistics: this.layer.$statistics
+    });
+    this.statistics.refreshStatistics();
+
+    this.footer = this.applyChildComponent(new Footer(), {
+        $footer: this.layer.$footer
     });
     this.footer.refreshFooter();
-    this.footer.listenFooterMenuForElementClicks({
-        'statistics': this.showStatistics.bind(this),
-        'help': this.showHelp.bind(this)
-    });
 
-    this.dialog = new Dialog();
-    this.dialog.setParentControl(this);
+    this.dialog = this.applyChildComponent(new Dialog(), {});
     this.dialog.openDialog({
         dialogId: 'select-my-country',
         promise: this.startWithSettings.bind(this)
@@ -38,6 +36,19 @@ let Main = function () {
  * Методы класса Main.
  */
 Main.prototype = {
+
+    /**
+     * Применить свойства дочернему компоненту.
+     *
+     * @param {Object} childComponent
+     * @param {Object} parameters
+     * @returns {Object}
+     */
+    applyChildComponent (childComponent, parameters) {
+        parameters = $.extend(true, { parent: this }, parameters);
+        ChildComponent.apply(childComponent, [ parameters ]);
+        return childComponent;
+    },
 
     /**
      * Отобразить статистику.
@@ -63,47 +74,45 @@ Main.prototype = {
      * @param {Object} settings
      */
     startWithSettings (settings) {
+        this.year = 0;
+        this.difficulty = settings.difficulty;
         this.myCountry.setCountryCode(settings.countryCode);
         this.myCountry.setCountryDefaults();
         this.myCountry.createNeighbors();
         this.startNewYear();
     },
 
+    /**
+     * Начать новый год.
+     */
     startNewYear () {
-        console.log('Начат год', this.myCountry.year);
+        this.year++;
+        console.log('Начат год', this.year);
         this.header.refreshHeader();
+        this.statistics.refreshStatistics();
     },
 
     /**
      * Уничтожить зависимости.
      */
     destroy () {
-        this.dialog.destroy();
-        delete this.dialog;
+        delete this.difficulty;
+        delete this.year;
 
-        this.footer.destroy();
-        delete this.footer;
+        this.deleteChildComponents([ 'dialog', 'footer', 'statistics', 'header', 'layer', 'myCountry' ]);
+    },
 
-        this.header.destroy();
-        delete this.header;
-
-        this.myCountry.destroy();
-        delete this.myCountry;
-
-        this.layer.destroy();
-        delete this.layer;
+    /**
+     * Уничтожить, а затем удалить дочерние компоненты.
+     *
+     * @param {Array} componentNames
+     */
+    deleteChildComponents: function (componentNames) {
+        for (let i = 0; i < componentNames; i++) {
+            let componentName = componentNames[i];
+            this[componentName].destroy();
+            delete this[componentName];
+        }
     }
 
 };
-
-$(function () {
-    // let application = new Main();
-    // application.destroy();
-    new Main();
-    debug();
-});
-
-function debug () {
-    $('.modal-dialog button[name="random"]').trigger('click');
-    $('.modal-dialog button[name="proceed"]').trigger('click');
-}

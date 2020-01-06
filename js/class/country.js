@@ -6,7 +6,6 @@
  */
 let Country = function () {
     this.live = false;
-    this.year = 1;
 };
 
 /**
@@ -277,6 +276,8 @@ Country.prototype = {
             warriors: 0.5,
             churchmen: 0.5
         };
+
+        this.live = true;
         console.log('setCountryDefaults', this);
     },
 
@@ -294,7 +295,6 @@ Country.prototype = {
         delete this.people;
         delete this.geo;
         delete this.countryCode;
-        delete this.year;
         delete this.live;
     }
 

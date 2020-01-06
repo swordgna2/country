@@ -2,29 +2,28 @@
  * Низ.
  *
  * @class Footer
- * @param {Object} parameters
  * @constructor
  */
-let Footer = function (parameters) {
-    if (typeof parameters !== 'object' || parameters === null) {
-        throw 'Неправильный формат параметров.';
-    }
-
-    this.$footer = parameters.$footer;
-    if (typeof this.$footer !== 'object' || this.$footer === null) {
-        throw 'Неправильный формат параметра $footer';
-    }
-
-    this.country = parameters.country;
-    if (typeof this.country !== 'object' || this.country === null || !(this.country instanceof Country)) {
-        throw 'Неправильный формат параметра country';
-    }
+let Footer = function () {
 };
 
 /**
  * Методы класса Footer.
  */
 Footer.prototype = {
+
+    /**
+     * Установить начальные параметры.
+     *
+     * @param {Object} parameters
+     */
+    setInitialParameters: function (parameters) {
+        functions.checkParametersIntegrity(parameters, {
+            $footer: 'object'
+        });
+
+        this.$footer = parameters.$footer;
+    },
 
     /**
      * Обновить низ.
@@ -37,6 +36,11 @@ Footer.prototype = {
 
             this.$footerMenu.append($('<li/>').addClass('statistics').text('Статистика'));
             this.$footerMenu.append($('<li/>').addClass('help').text('Помощь'));
+
+            this.listenFooterMenuForElementClicks({
+                'statistics': this.parent.showStatistics.bind(this.parent),
+                'help': this.parent.showHelp.bind(this.parent)
+            });
         }
     },
 
@@ -62,6 +66,8 @@ Footer.prototype = {
     destroy () {
         this.$footerMenu.remove();
         delete this.$footerMenu;
+
+        delete this.$footer;
     }
 
 };

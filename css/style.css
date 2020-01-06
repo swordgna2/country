@@ -16,6 +16,7 @@ input, button, select {
     white-space: nowrap;
     overflow: visible;
     transition-duration: 0.28s;
+    cursor: pointer;
 }
 
 button {

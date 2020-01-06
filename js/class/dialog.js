@@ -17,10 +17,12 @@ Dialog.prototype = {
      */
     dialogData: {
         'select-my-country': {
-            $header: 'Выбор страны',
+            $header: 'Начало игры',
             $content:
-                '<p>Выберите страну, за которую играете</p>' +
-                '<p><select name="country"/> <button name="random"><i class="fa fa-refresh"></i> случайная</button></p>',
+                '<p>Выберите страну, за которую играете:</p>' +
+                '<p><i class="fa fa-globe"></i>&nbsp;<select name="country"/>&nbsp;<button name="random"><i class="fa fa-refresh"></i> случайная</button></p>' +
+                '<p>Выберите сложность:</p>' +
+                '<p><i class="fa fa-graduation-cap"></i>&nbsp;<select name="difficulty"/></p>',
             $footer: '<button name="proceed">Продолжить</button>',
             form: {
                 country: {
@@ -29,6 +31,15 @@ Dialog.prototype = {
                     options: function () {
                         return this.parent.myCountry.names;
                     }
+                },
+                difficulty: {
+                    type: 'select',
+                    options: {
+                        easy: 'легко',
+                        normal: 'нормально',
+                        difficult: 'сложно'
+                    },
+                    default: 'normal'
                 }
             },
             buttons: {
@@ -44,18 +55,11 @@ Dialog.prototype = {
             },
             getResultData () {
                 return {
-                    countryCode: this.tempStorage.countryCode
+                    countryCode: this.tempStorage.countryCode,
+                    difficulty: this.modal.$window.find('[name="difficulty"]').val()
                 };
             }
         }
-    },
-
-    /**
-     * Установить главный (родительский) класс.
-     * @param parent
-     */
-    setParentControl: function (parent) {
-        this.parent = parent;
     },
 
     /**
@@ -196,10 +200,15 @@ Dialog.prototype = {
         if (properties.addEmptyOption) {
             selectOptions[0] = new Option(properties.addEmptyOption, '');
         }
-        if (typeof options === 'object' && options !== null && options.length) {
-            for (let i = 0; i < options.length; i++) {
-                selectOptions[selectOptions.length] = new Option(options[i], i.toString());
+        if (typeof options === 'object' && options !== null && Object.keys(options).length) {
+            for (let index in options) {
+                if (options.hasOwnProperty(index)) {
+                    selectOptions[selectOptions.length] = new Option(options[index], index.toString());
+                }
             }
+        }
+        if (typeof properties.default !== 'undefined') {
+            $select.val(properties.default);
         }
     },
 
@@ -249,11 +258,11 @@ Dialog.prototype = {
      * Уничтожить зависимости.
      */
     destroy () {
+        delete this.tempStorage;
         this.modal.destroy();
         delete this.modal;
         delete this.currentDialogData;
         delete this.currentDialogPromise;
-        delete this.parent;
     }
 
 };
