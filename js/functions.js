@@ -83,12 +83,30 @@ let functions = {
         function: 'функция'
     },
 
+    /**
+     * Всплывающее окно с предупреждением.
+     *
+     * @param {string} message
+     */
     alert (message) {
         new Modal({
             $html: message,
             windowClass: 'modal-alert',
             appearanceEffect: 'fadeIn'
         });
+    },
+
+    /**
+     * Всплывающее окно с информацией.
+     *
+     * @param message
+     */
+    inform (message) {
+        new Modal({
+            $html: message,
+            windowClass: 'modal-inform',
+            appearanceEffect: 'fadeIn'
+        })
     },
 
     /**
@@ -104,6 +122,12 @@ let functions = {
         return (k * 100).toFixed(precision);
     },
 
+    /**
+     * Добавить иконку в зависимости от значения процента.
+     *
+     * @param {Number|string} value
+     * @returns {string}
+     */
     colorPercentValue: function (value) {
         if (value <= 33.333) {
             return value + '&nbsp;<i class="fa fa-exclamation-triangle bad-condition"></i>';
@@ -111,6 +135,21 @@ let functions = {
             return value.toString();
         } else {
             return value + '&nbsp;<i class="fa fa-check-square-o good-condition"></i>';
+        }
+    },
+
+    /**
+     * Вычислить среднее арифметическое.
+     *
+     * @param {Object|Array} numbers
+     * @return {Number}
+     */
+    average: function (numbers) {
+        numbers = Object.values(numbers);
+        if (numbers.length) {
+            return numbers.reduce((a, b) => (a + b)) / numbers.length;
+        } else {
+            return 0;
         }
     }
 

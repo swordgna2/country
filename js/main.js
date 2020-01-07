@@ -15,6 +15,10 @@ let Main = function () {
     });
     this.header.refreshHeader();
 
+    this.log = this.applyChildComponent(new Log(), {
+        $dialog: this.layer.$dialog
+    });
+
     this.statistics = this.applyChildComponent(new Statistics(), {
         $statistics: this.layer.$statistics
     });
@@ -26,6 +30,7 @@ let Main = function () {
 
     this.dialog = this.applyChildComponent(new Dialog(), {});
     this.dialog.openDialog({
+        $container: this.layer.$wrapper,
         dialogId: 'select-my-country',
         promise: this.startWithSettings.bind(this)
     });
@@ -84,7 +89,7 @@ Main.prototype = {
      */
     startNewYear () {
         this.year++;
-        console.log('Начат год', this.year);
+        this.log.add('Начат ' + this.year + '-й год правления.');
         this.header.refreshHeader();
         this.statistics.refreshStatistics();
     },
@@ -96,7 +101,7 @@ Main.prototype = {
         delete this.difficulty;
         delete this.year;
 
-        this.deleteChildComponents([ 'dialog', 'footer', 'statistics', 'header', 'layer', 'myCountry' ]);
+        this.deleteChildComponents([ 'dialog', 'footer', 'statistics', 'log', 'header', 'layer', 'myCountry' ]);
     },
 
     /**

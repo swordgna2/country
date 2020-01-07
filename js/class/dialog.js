@@ -59,6 +59,28 @@ Dialog.prototype = {
                     difficulty: this.modal.$window.find('[name="difficulty"]').val()
                 };
             }
+        },
+        'show-neighbors': {
+            $header: 'Соседские страны',
+            $content:
+                '<div class="list"/>' +
+                '<div class="help"/>',
+            $footer: '<button name="proceed">Продолжить</button>',
+            form: {
+                list: {
+                    type: 'list',
+                    items () {
+                        return this.parent.myCountry.getNeighborsListFormatted();
+                    }
+                },
+                help: {
+                    type: 'html',
+                    html () {
+                        return 'иконка';
+                        // return this.parent.help.getIcon('about-mood');
+                    }
+                }
+            }
         }
     },
 
@@ -75,7 +97,7 @@ Dialog.prototype = {
         this.clearTempStorage();
         this.setCurrentDialog(parameters.dialogId);
         this.currentDialogPromise = (typeof parameters.promise === 'function') ? parameters.promise : function () {};
-        this.showDialogWindow();
+        this.showDialogWindow(parameters);
         this.setFormData();
         this.listenDialogButtons();
     },
@@ -122,13 +144,21 @@ Dialog.prototype = {
 
     /**
      * Отобразить окно.
+     *
+     * @param {Object} parameters
      */
-    showDialogWindow () {
+    showDialogWindow (parameters) {
+        parameters = (typeof parameters === 'object' && parameters !== null) ? parameters : {};
+        let $container = parameters.$container || this.parent.layer.$dialog;
+        let modal = typeof parameters.modal === 'undefined' || Boolean(parameters.modal) === true;
+        let closeIcon = Boolean(parameters.closeIcon);
+
         let $html = this.getDialogHtml();
         this.modal = new Modal({
+            $container: $container,
             $html: $html,
-            modal: true,
-            closeIcon: false,
+            modal: modal,
+            closeIcon: closeIcon,
             windowClass: 'modal-dialog'
         });
     },
@@ -170,12 +200,21 @@ Dialog.prototype = {
         for (let elementName in this.currentDialogData.form) {
             if (this.currentDialogData.form.hasOwnProperty(elementName)) {
                 let $formElement = this.modal.$window.find('[name="' + elementName + '"]');
+                if ($formElement.length === 0) {
+                    $formElement = this.modal.$window.find('.' + elementName);
+                }
                 if ($formElement.length) {
                     let properties = this.currentDialogData.form[elementName];
                     let elementType = properties.type;
                     switch (elementType) {
                         case 'select':
                             this.setFormSelect($formElement, properties);
+                            break;
+                        case 'list':
+                            this.setFormList($formElement, properties);
+                            break;
+                        case 'html':
+                            this.setFormHtml($formElement, properties);
                             break;
                         default:
                             break;
@@ -186,29 +225,74 @@ Dialog.prototype = {
     },
 
     /**
-     * Установить свойства элемента формы "select".
+     * Установить свойства элемента формы типа "select".
      *
      * @param {Object} $select
      * @param {Object} properties
      */
     setFormSelect ($select, properties) {
-        let selectOptions = $select.prop('options');
-        let options = properties.options;
-        if (typeof properties.options === 'function') {
-            options = properties.options.bind(this)();
+        if (typeof $select === 'object' && $select !== null && $select.length && typeof properties === 'object' && properties !== null) {
+            let selectOptions = $select.prop('options');
+            let options = properties.options;
+            if (typeof options === 'function') {
+                options = options.bind(this)();
+            }
+            if (properties.addEmptyOption) {
+                selectOptions[0] = new Option(properties.addEmptyOption, '');
+            }
+            if (typeof options === 'object' && options !== null && Object.keys(options).length) {
+                for (let index in options) {
+                    if (options.hasOwnProperty(index)) {
+                        selectOptions[selectOptions.length] = new Option(options[index], index.toString());
+                    }
+                }
+            }
+            if (typeof properties.default !== 'undefined') {
+                $select.val(properties.default);
+            }
         }
-        if (properties.addEmptyOption) {
-            selectOptions[0] = new Option(properties.addEmptyOption, '');
-        }
-        if (typeof options === 'object' && options !== null && Object.keys(options).length) {
-            for (let index in options) {
-                if (options.hasOwnProperty(index)) {
-                    selectOptions[selectOptions.length] = new Option(options[index], index.toString());
+    },
+
+    /**
+     * Установить свойства элемента формы типа "list".
+     *
+     * @param {Object} $list
+     * @param {Object} properties
+     */
+    setFormList ($list, properties) {
+        if (typeof $list === 'object' && $list !== null && $list.length && typeof properties === 'object' && properties !== null) {
+            let items = properties.items;
+            if (typeof items === 'function') {
+                items = items.bind(this)();
+            }
+            if (typeof items === 'object' && items !== null && Object.keys(items).length) {
+                for (let index in items) {
+                    if (items.hasOwnProperty(index)) {
+                        let $listItem = $('<div/>');
+                        $listItem.appendTo($list);
+                        $listItem.addClass('list-item');
+                        $listItem.append(items[index]);
+                    }
                 }
             }
         }
-        if (typeof properties.default !== 'undefined') {
-            $select.val(properties.default);
+    },
+
+    /**
+     * Установить вёрстку в элемент формы.
+     *
+     * @param {Object} $html
+     * @param {Object} properties
+     */
+    setFormHtml ($html, properties) {
+        if (typeof $html === 'object' && $html !== null && $html.length && typeof properties === 'object' && properties !== null) {
+            let html = properties.html;
+            if (typeof html === 'function') {
+                html = html.bind(this)();
+            }
+            if (html) {
+                $html.append(html);
+            }
         }
     },
 

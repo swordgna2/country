@@ -41,10 +41,22 @@ Header.prototype = {
             this.$countryName = $('<span/>');
             this.$countryName.appendTo(this.$header);
             this.$countryName.addClass('country-name');
+            this.$countryName.on('click', this.showNeighbors.bind(this));
         }
 
         let countryName = this.parent.myCountry.getName();
         this.$countryName.html('<i class="fa fa-globe"></i>&nbsp;' + countryName);
+    },
+
+    /**
+     * Отобразить соседей.
+     */
+    showNeighbors () {
+        this.parent.dialog.openDialog({
+            dialogId: 'show-neighbors',
+            modal: false,
+            closeIcon: true
+        });
     },
 
     /**
