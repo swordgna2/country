@@ -61,6 +61,7 @@ Statistics.prototype = {
         },
         mood: {
             caption: 'Довольство',
+            dimension: '%',
             sub: {
                 peasants: { caption: 'Крестьяне', type: 'kToPercent', colored: true },
                 workers: { caption: 'Рабочие', type: 'kToPercent', colored: true },

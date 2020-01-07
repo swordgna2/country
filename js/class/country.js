@@ -5,6 +5,7 @@
  * @constructor
  */
 let Country = function () {
+    this.neighbors = [];
 };
 
 /**
@@ -13,7 +14,27 @@ let Country = function () {
 Country.prototype = {
 
     /**
-     * Наименования.
+     * Автоматически создать все страны.
+     */
+    autoSetCountries: function () {
+        for (let i = 0; i < this.names.length; i++) {
+            let newCountry = new Country();
+            newCountry.countryCode = i;
+            newCountry.setCountryDefaults();
+            this.countries[i] = newCountry;
+        }
+        for (let i = 0; i < this.countries.length; i++) {
+            this.countries[i].addRandomNeighbor();
+        }
+        for (let i = 0; i < this.countries.length; i++) {
+            if (this.countries[i].neighbors.length < 2) {
+                this.countries[i].addRandomNeighbor();
+            }
+        }
+    },
+
+    /**
+     * Наименования стран.
      */
     names: [
         "Австралия",
@@ -212,30 +233,9 @@ Country.prototype = {
     ],
 
     /**
-     * Получить наименование страны.
-     *
-     * @returns {string}
+     * Страны.
      */
-    getName () {
-        if (typeof this.countryCode !== 'undefined') {
-            return this.names[this.countryCode];
-        } else {
-            return 'Страна без названия';
-        }
-    },
-
-    /**
-     * Установить код страны.
-     *
-     * @param {string|Number} countryCode
-     */
-    setCountryCode: function (countryCode) {
-        if (this.names[countryCode]) {
-            this.countryCode = countryCode;
-        } else {
-            throw 'Страны с кодом ' + countryCode + ' не существует.';
-        }
-    },
+    countries: [],
 
     /**
      * Установить умолчания для страны.
@@ -277,9 +277,26 @@ Country.prototype = {
         };
     },
 
-    createNeighbors () {
-        let neighborsCount = functions.getIntegerRandom(2, 5);
-        console.log('createNeighbors');
+    /**
+     * Добавить стране соседа.
+     */
+    addRandomNeighbor () {
+        let neighborCode = functions.getIntegerRandom(0, this.countries.length - 1);
+        this.neighbors.push(neighborCode);
+        this.countries[neighborCode].neighbors.push(this.countryCode);
+    },
+
+    /**
+     * Получить наименование страны.
+     *
+     * @returns {string}
+     */
+    getName () {
+        if (typeof this.countryCode !== 'undefined') {
+            return this.names[this.countryCode];
+        } else {
+            return 'Страна без названия';
+        }
     },
 
     /**
@@ -292,6 +309,10 @@ Country.prototype = {
         delete this.people;
         delete this.geo;
         delete this.countryCode;
+        delete this.neighbors;
+        this.countries = [];
     }
 
 };
+
+Country.prototype.autoSetCountries();

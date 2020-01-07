@@ -1,8 +1,7 @@
 $(function () {
-    // let game = new Main();
-    // game.destroy();
-    new Main();
+    window.game = new Main();
     debug();
+    console.log(window.game);
 });
 
 function debug () {

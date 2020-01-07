@@ -5,7 +5,7 @@
  * @constructor
  */
 let Main = function () {
-    this.myCountry = this.applyChildComponent(new Country(), {});
+    this.myCountry = new Country();
 
     this.layer = this.applyChildComponent(new Layer(), {});
     this.layer.createLayer();
@@ -75,9 +75,7 @@ Main.prototype = {
     startWithSettings (settings) {
         this.year = 0;
         this.difficulty = settings.difficulty;
-        this.myCountry.setCountryCode(settings.countryCode);
-        this.myCountry.setCountryDefaults();
-        this.myCountry.createNeighbors();
+        this.myCountry = Country.prototype.countries[settings.countryCode];
         this.startNewYear();
     },
 
