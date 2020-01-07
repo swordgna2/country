@@ -47,7 +47,8 @@ Statistics.prototype = {
                 workers: 'Рабочие',
                 warriors: 'Воины',
                 priests: 'Священники'
-            }
+            },
+            help: 'not-ready'
         },
         stocks: {
             caption: 'Запасы',
@@ -67,7 +68,8 @@ Statistics.prototype = {
                 workers: { caption: 'Рабочие', type: 'kToPercent', colored: true },
                 warriors: { caption: 'Воины', type: 'kToPercent', colored: true },
                 priests: { caption: 'Священники', type: 'kToPercent', colored: true }
-            }
+            },
+            help: 'about-mood'
         }
     },
 
@@ -167,6 +169,12 @@ Statistics.prototype = {
         $caption.addClass('group-caption');
         $caption.append('<i class="fa fa-minus collapse"></i>&nbsp;');
         $caption.append(schemeElement.caption);
+        if (schemeElement.help) {
+            $caption.append('&nbsp;&nbsp;&nbsp;');
+            $caption.append(this.parent.help.getHelpIcon({
+                helpId: schemeElement.help
+            }));
+        }
         $caption.on('click', this.toggleGroup.bind(this));
 
         let $childContainer = $('<div/>');

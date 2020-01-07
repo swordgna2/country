@@ -34,8 +34,8 @@ Footer.prototype = {
             this.$footerMenu.appendTo(this.$footer);
             this.$footerMenu.addClass('footer-menu');
 
-            this.$footerMenu.append($('<li/>').addClass('statistics').text('Статистика'));
-            this.$footerMenu.append($('<li/>').addClass('help').text('Помощь'));
+            this.$footerMenu.append($('<li/>').addClass('statistics link').text('Статистика'));
+            this.$footerMenu.append($('<li/>').addClass('help link').text('Помощь'));
 
             this.listenFooterMenuForElementClicks({
                 'statistics': this.parent.showStatistics.bind(this.parent),

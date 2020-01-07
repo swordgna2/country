@@ -28,6 +28,7 @@ Modal.prototype = {
      */
     setParameters (parameters) {
         if (typeof parameters === 'object' && parameters !== null) {
+            this.uniqueId = parameters.uniqueId || '';
             this.$container = parameters.$container || $('body');
             this.$html = parameters.$html;
             this.windowClass = parameters.windowClass;
@@ -47,10 +48,20 @@ Modal.prototype = {
                 instantly: true,
                 promise: function () {}
             });
+            this.checkForModalWithThisId();
             this.createLayers();
             this.$window.append(this.$html);
             this.listenClose();
             this.animateWindow();
+        }
+    },
+
+    /**
+     * Проверить существование окна с данным уникальным идентификатором.
+     */
+    checkForModalWithThisId: function () {
+        if (this.uniqueId) {
+            $('.modal-background').trigger('close-anyway.' + this.uniqueId);
         }
     },
 
@@ -87,6 +98,15 @@ Modal.prototype = {
                 if (event.keyCode === 27) {
                     this.close({});
                 }
+            }.bind(this));
+        }
+
+        if (this.uniqueId) {
+            this.$background.on('close-anyway.' + this.uniqueId, function () {
+                this.close({
+                    instantly: true,
+                    promise: function () {}
+                });
             }.bind(this));
         }
     },

@@ -90,6 +90,7 @@ let functions = {
      */
     alert (message) {
         new Modal({
+            uniqueId: 'alert',
             $html: message,
             windowClass: 'modal-alert',
             appearanceEffect: 'fadeIn'
@@ -106,6 +107,7 @@ let functions = {
             message: 'string|object'
         });
         new Modal({
+            uniqueId: 'inform',
             $container: parameters.$container,
             $html: parameters.message,
             windowClass: 'modal-inform',

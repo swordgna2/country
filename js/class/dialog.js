@@ -157,6 +157,7 @@ Dialog.prototype = {
 
         let $html = this.getDialogHtml();
         this.modal = new Modal({
+            uniqueId: 'dialog',
             $container: $container,
             $html: $html,
             modal: modal,

@@ -61,6 +61,7 @@ Main.prototype = {
      */
     showStatistics () {
         new Modal({
+            uniqueId: 'show-statistics',
             $html: 'Todo: отобразить статистику.'
         });
     },
@@ -70,6 +71,7 @@ Main.prototype = {
      */
     showHelp () {
         new Modal({
+            uniqueId: 'show-help',
             $html: 'Todo: отобразить помощь.'
         });
     },

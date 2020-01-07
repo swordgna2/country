@@ -40,7 +40,7 @@ Header.prototype = {
         if (typeof this.$countryName === 'undefined') {
             this.$countryName = $('<span/>');
             this.$countryName.appendTo(this.$header);
-            this.$countryName.addClass('country-name');
+            this.$countryName.addClass('country-name link');
             this.$countryName.on('click', this.showNeighbors.bind(this));
         }
 

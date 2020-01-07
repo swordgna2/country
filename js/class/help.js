@@ -55,7 +55,8 @@ Help.prototype = {
         let $icon = $('<i/>');
         $icon.addClass('fa fa-info help-icon');
         $icon.attr('title', 'Нажите для получения справки.');
-        $icon.on('click', function () {
+        $icon.on('click', function (event) {
+            event.stopPropagation();
             this.showHelpWindow(helpData);
         }.bind(this));
 
