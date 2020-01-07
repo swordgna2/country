@@ -3,7 +3,6 @@ html, body {
     margin: 0;
     font-family: Arial, serif;
     color: #444444;
-    line-height: 1;
 }
 
 input, button, select {
@@ -189,6 +188,7 @@ ul.footer-menu > li:hover {
     border: 1px solid silver;
     border-radius: 4px;
     user-select: none;
+    overflow: hidden;
 }
 
 .modal-window-close {
@@ -222,6 +222,36 @@ ul.footer-menu > li:hover {
 .modal-alert {
     border: 1px solid darkred;
     color: darkred;
+}
+
+.modal-inform {
+    border: 1px solid blue;
+}
+.modal-inform header {
+    margin: -20px -20px 20px;
+    background-color: #eeeeee;
+    padding: 10px 20px;
+    line-height: 20px;
+    text-align: center;
+}
+
+.help-icon {
+    width: 20px;
+    line-height: 20px !important;
+    text-align: center;
+    border: 1px solid darkblue;
+    border-radius: 100%;
+    color: darkblue;
+    cursor: help;
+}
+
+.header-help-icon {
+    float: left;
+    line-height: 20px !important;
+}
+
+.text-align-right {
+    text-align: right;
 }
 
 .bad-condition {

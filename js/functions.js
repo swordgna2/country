@@ -99,11 +99,15 @@ let functions = {
     /**
      * Всплывающее окно с информацией.
      *
-     * @param message
+     * @param {Object} parameters
      */
-    inform (message) {
+    inform (parameters) {
+        this.checkParametersIntegrity(parameters, {
+            message: 'string|object'
+        });
         new Modal({
-            $html: message,
+            $container: parameters.$container,
+            $html: parameters.message,
             windowClass: 'modal-inform',
             appearanceEffect: 'fadeIn'
         })

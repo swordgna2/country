@@ -34,6 +34,8 @@ let Main = function () {
         dialogId: 'select-my-country',
         promise: this.startWithSettings.bind(this)
     });
+
+    this.help = this.applyChildComponent(new Help(), {});
 };
 
 /**
@@ -101,7 +103,7 @@ Main.prototype = {
         delete this.difficulty;
         delete this.year;
 
-        this.deleteChildComponents([ 'dialog', 'footer', 'statistics', 'log', 'header', 'layer', 'myCountry' ]);
+        this.deleteChildComponents([ 'help', 'dialog', 'footer', 'statistics', 'log', 'header', 'layer', 'myCountry' ]);
     },
 
     /**

@@ -61,10 +61,10 @@ Dialog.prototype = {
             }
         },
         'show-neighbors': {
-            $header: 'Соседские страны',
+            $header: 'Соседние страны',
             $content:
                 '<div class="list"/>' +
-                '<div class="help"/>',
+                '<div class="help text-align-right"/>',
             $footer: '<button name="proceed">Продолжить</button>',
             form: {
                 list: {
@@ -76,8 +76,9 @@ Dialog.prototype = {
                 help: {
                     type: 'html',
                     html () {
-                        return 'иконка';
-                        // return this.parent.help.getIcon('about-mood');
+                        return this.parent.help.getHelpIcon({
+                            helpId: 'about-mood'
+                        });
                     }
                 }
             }
@@ -119,6 +120,7 @@ Dialog.prototype = {
         if (this.currentDialogData === undefined) {
             throw 'Диалог ' + dialogId + ' не существует.';
         }
+
         if (typeof this.currentDialogData.form !== 'object' || this.currentDialogData.form === null) {
             this.currentDialogData.form = {};
         }
