@@ -260,7 +260,7 @@ Country.prototype = {
             gold: functions.getIntegerRandom(10, 20),
             corn: this.geo.plain * functions.getIntegerRandom(5, 10),
             wood: this.geo.woods * functions.getIntegerRandom(5, 10),
-            minerals: /*полезные ископаемые*/ this.geo.mountains * functions.getIntegerRandom(5, 10)
+            minerals: this.geo.mountains * functions.getIntegerRandom(5, 10)
         };
 
         this.pendingEvents = {
@@ -274,6 +274,12 @@ Country.prototype = {
             workers: 0.5,
             warriors: 0.5,
             priests: 0.5
+        };
+
+        this.family = {
+            wife: false,
+            son: false,
+            daughter: false
         };
     },
 
@@ -311,7 +317,7 @@ Country.prototype = {
             let mood = functions.average(neighbor.mood);
             mood = functions.convertKToPercent(mood, 0);
             mood = functions.colorPercentValue(mood);
-            list.push(neighbor.getName() + '&nbsp;&mdash;&nbsp;' + mood + '%');
+            list.push(neighbor.getName() + '&nbsp;&rarr;&nbsp;' + mood + '&nbsp;%');
         }
         return list;
     },
@@ -320,6 +326,7 @@ Country.prototype = {
      * Уничтожить зависимости.
      */
     destroy () {
+        delete this.family;
         delete this.mood;
         delete this.pendingEvents;
         delete this.stocks;

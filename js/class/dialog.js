@@ -76,7 +76,7 @@ Dialog.prototype = {
                 help: {
                     type: 'html',
                     html () {
-                        return this.parent.help.getHelpIcon({
+                        return this.help.getHelpIcon({
                             helpId: 'about-mood'
                         });
                     }
@@ -151,7 +151,7 @@ Dialog.prototype = {
      */
     showDialogWindow (parameters) {
         parameters = (typeof parameters === 'object' && parameters !== null) ? parameters : {};
-        let $container = parameters.$container || this.parent.layer.$dialog;
+        let $container = parameters.$container || this.layer.$dialog;
         let modal = typeof parameters.modal === 'undefined' || Boolean(parameters.modal) === true;
         let closeIcon = Boolean(parameters.closeIcon);
 

@@ -44,7 +44,7 @@ Header.prototype = {
             this.$countryName.on('click', this.showNeighbors.bind(this));
         }
 
-        let countryName = this.parent.myCountry.getName();
+        let countryName = this.myCountry.getName();
         this.$countryName.html('<i class="fa fa-globe"></i>&nbsp;' + countryName);
     },
 
@@ -52,7 +52,7 @@ Header.prototype = {
      * Отобразить соседей.
      */
     showNeighbors () {
-        this.parent.dialog.openDialog({
+        this.dialog.openDialog({
             dialogId: 'show-neighbors',
             modal: false,
             closeIcon: true
@@ -69,7 +69,7 @@ Header.prototype = {
             this.$year.addClass('year');
         }
 
-        let year = this.parent.year;
+        let year = this.year.number;
         let yearHtml = '';
         if (year >= 1) {
             yearHtml = '<i class="fa fa-calendar"></i>&nbsp;Год ' + year + '-й';

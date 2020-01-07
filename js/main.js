@@ -5,7 +5,11 @@
  * @constructor
  */
 let Main = function () {
+    this.createComponents();
+
     this.myCountry = new Country();
+
+    this.year = this.applyChildComponent(new Year(), {});
 
     this.layer = this.applyChildComponent(new Layer(), {});
     this.layer.createLayer();
@@ -13,7 +17,6 @@ let Main = function () {
     this.header = this.applyChildComponent(new Header(), {
         $header: this.layer.$header
     });
-    this.header.refreshHeader();
 
     this.log = this.applyChildComponent(new Log(), {
         $dialog: this.layer.$dialog
@@ -26,22 +29,42 @@ let Main = function () {
     this.footer = this.applyChildComponent(new Footer(), {
         $footer: this.layer.$footer
     });
-    this.footer.refreshFooter();
 
     this.dialog = this.applyChildComponent(new Dialog(), {});
+
+    this.help = this.applyChildComponent(new Help(), {});
+
+    this.createCrossReferences();
+
+    this.header.refreshHeader();
+    this.footer.refreshFooter();
     this.dialog.openDialog({
         $container: this.layer.$wrapper,
         dialogId: 'select-my-country',
         promise: this.startWithSettings.bind(this)
     });
-
-    this.help = this.applyChildComponent(new Help(), {});
 };
 
 /**
  * Методы класса Main.
  */
 Main.prototype = {
+
+    /**
+     * Создать компоненты.
+     */
+    createComponents () {
+        for (let i = 0; i < this.componentNames.length; i++) {
+            let componentName = this.componentNames[i];
+            this[componentName] = {};
+        }
+    },
+
+    /**
+     * Зарегистрированные компоненты.
+     * Будут доступны перекрёстно в каждом из компонентов.
+     */
+    componentNames: [ 'myCountry', 'layer', 'header', 'log', 'statistics', 'footer', 'dialog', 'help', 'year' ],
 
     /**
      * Применить свойства дочернему компоненту.
@@ -54,6 +77,20 @@ Main.prototype = {
         parameters = $.extend(true, { parent: this }, parameters);
         ChildComponent.apply(childComponent, [ parameters ]);
         return childComponent;
+    },
+
+    /**
+     * Создать перекрёстные ссылки между компонентами.
+     */
+    createCrossReferences () {
+        for (let original = 0; original < this.componentNames.length; original++) {
+            let originalComponentName = this.componentNames[original];
+            let originalComponent = this[originalComponentName];
+            for (let each = 0; each < this.componentNames.length; each++) {
+                let eachComponentName = this.componentNames[each];
+                originalComponent[eachComponentName] = this[eachComponentName];
+            }
+        }
     },
 
     /**
@@ -82,20 +119,9 @@ Main.prototype = {
      * @param {Object} settings
      */
     startWithSettings (settings) {
-        this.year = 0;
         this.difficulty = settings.difficulty;
         this.myCountry = Country.prototype.countries[settings.countryCode];
-        this.startNewYear();
-    },
-
-    /**
-     * Начать новый год.
-     */
-    startNewYear () {
-        this.year++;
-        this.log.add('Начат ' + this.year + '-й год правления.');
-        this.header.refreshHeader();
-        this.statistics.refreshStatistics();
+        this.year.startNewYear();
     },
 
     /**
@@ -103,19 +129,31 @@ Main.prototype = {
      */
     destroy () {
         delete this.difficulty;
-        delete this.year;
 
-        this.deleteChildComponents([ 'help', 'dialog', 'footer', 'statistics', 'log', 'header', 'layer', 'myCountry' ]);
+        this.removeCrossReferences();
+        this.deleteChildComponents();
+    },
+
+    /**
+     * Удалить перекрёстные ссылки между компонентами.
+     */
+    removeCrossReferences () {
+        for (let original = 0; original < this.componentNames.length; original++) {
+            let originalComponentName = this.componentNames[original];
+            let originalComponent = this[originalComponentName];
+            for (let each = 0; each < this.componentNames.length; each++) {
+                let eachComponentName = this.componentNames[each];
+                delete originalComponent[eachComponentName];
+            }
+        }
     },
 
     /**
      * Уничтожить, а затем удалить дочерние компоненты.
-     *
-     * @param {Array} componentNames
      */
-    deleteChildComponents: function (componentNames) {
-        for (let i = 0; i < componentNames; i++) {
-            let componentName = componentNames[i];
+    deleteChildComponents: function () {
+        for (let i = this.componentNames.length - 1; i >= 0; i--) {
+            let componentName = this.componentNames[i];
             this[componentName].destroy();
             delete this[componentName];
         }

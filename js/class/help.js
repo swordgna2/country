@@ -85,7 +85,7 @@ Help.prototype = {
 
         functions.inform({
             message: $html,
-            $container: parameters.$container || this.parent.layer.$dialog
+            $container: parameters.$container || this.layer.$dialog
         });
     }
 

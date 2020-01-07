@@ -70,6 +70,14 @@ Statistics.prototype = {
                 priests: { caption: 'Священники', type: 'kToPercent', colored: true }
             },
             help: 'about-mood'
+        },
+        family: {
+            caption: 'Семья',
+            sub: {
+                wife: { caption: 'Жена', type: 'Boolean' },
+                son: { caption: 'Сын', type: 'Boolean' },
+                daughter: { caption: 'Дочь', type: 'Boolean' }
+            }
         }
     },
 
@@ -90,7 +98,7 @@ Statistics.prototype = {
      * Удалить элементы статистики.
      */
     removeStatisticsLayout: function () {
-        this.$statistics.find('.group-caption, .group-data, .list-row').remove();
+        this.$statistics.find('.group, .list-row').remove();
     },
 
     /**
@@ -171,7 +179,7 @@ Statistics.prototype = {
         $caption.append(schemeElement.caption);
         if (schemeElement.help) {
             $caption.append('&nbsp;&nbsp;&nbsp;');
-            $caption.append(this.parent.help.getHelpIcon({
+            $caption.append(this.help.getHelpIcon({
                 helpId: schemeElement.help
             }));
         }
