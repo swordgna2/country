@@ -9,7 +9,7 @@ let Main = function () {
 
     this.myCountry = new Country();
 
-    this.year = this.applyChildComponent(new Year(), {});
+    this.reign = this.applyChildComponent(new Reign(), {});
 
     this.layer = this.applyChildComponent(new Layer(), {});
     this.layer.createLayer();
@@ -64,7 +64,7 @@ Main.prototype = {
      * Зарегистрированные компоненты.
      * Будут доступны перекрёстно в каждом из компонентов.
      */
-    componentNames: [ 'myCountry', 'layer', 'header', 'log', 'statistics', 'footer', 'dialog', 'help', 'year' ],
+    componentNames: [ 'myCountry', 'layer', 'header', 'log', 'statistics', 'footer', 'dialog', 'help', 'reign' ],
 
     /**
      * Применить свойства дочернему компоненту.
@@ -121,7 +121,7 @@ Main.prototype = {
     startWithSettings (settings) {
         this.difficulty = settings.difficulty;
         this.myCountry = Country.prototype.countries[settings.countryCode];
-        this.year.startNewYear();
+        this.reign.startNewYear();
     },
 
     /**

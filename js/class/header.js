@@ -69,7 +69,7 @@ Header.prototype = {
             this.$year.addClass('year');
         }
 
-        let year = this.year.number;
+        let year = this.reign.number;
         let yearHtml = '';
         if (year >= 1) {
             yearHtml = '<i class="fa fa-calendar"></i>&nbsp;Год ' + year + '-й';

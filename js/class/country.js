@@ -242,9 +242,9 @@ Country.prototype = {
      */
     setCountryDefaults () {
         this.geo = {
-            plain: functions.getIntegerRandom(5000, 10000),
-            woods: functions.getIntegerRandom(5000, 10000),
-            mountains: functions.getIntegerRandom(5000, 10000),
+            plain: functions.getIntegerRandom(1000, 2000),
+            woods: functions.getIntegerRandom(500, 1000),
+            mountains: functions.getIntegerRandom(500, 1000),
             sea: functions.getBooleanRandom()
         };
 

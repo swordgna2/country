@@ -1,6 +1,6 @@
 $(function () {
     window.game = new Main();
-    debug();
+    // debug();
     console.log(window.game);
 });
 

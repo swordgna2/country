@@ -103,6 +103,7 @@ Modal.prototype = {
 
         if (this.uniqueId) {
             this.$background.on('close-anyway.' + this.uniqueId, function () {
+                console.log(this.uniqueId);
                 this.close({
                     instantly: true,
                     promise: function () {}

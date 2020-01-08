@@ -82,6 +82,11 @@ Dialog.prototype = {
                     }
                 }
             }
+        },
+        'workers-distribution': {
+            $header: 'Распределение населения',
+            $content:
+                '<div class=""/>',
         }
     },
 
@@ -157,7 +162,7 @@ Dialog.prototype = {
 
         let $html = this.getDialogHtml();
         this.modal = new Modal({
-            uniqueId: 'dialog',
+            uniqueId: parameters.dialogId || 'dialog',
             $container: $container,
             $html: $html,
             modal: modal,
